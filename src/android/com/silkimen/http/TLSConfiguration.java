@@ -10,8 +10,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
-import com.silkimen.http.TLSSocketFactory;
-
 public class TLSConfiguration {
   private TrustManager[] trustManagers;
   private KeyManager[] keyManagers;
@@ -47,11 +45,7 @@ public class TLSConfiguration {
 
       context.init(this.keyManagers, this.trustManagers, new SecureRandom());
 
-      if (android.os.Build.VERSION.SDK_INT < 20) {
-        this.socketFactory = new TLSSocketFactory(context);
-      } else {
-        this.socketFactory = context.getSocketFactory();
-      }
+      this.socketFactory = context.getSocketFactory();
 
       return this.socketFactory;
     } catch (GeneralSecurityException e) {
